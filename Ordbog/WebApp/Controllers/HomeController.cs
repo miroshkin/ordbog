@@ -1,32 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Ordbog.App.Data;
+using Ordbog.App.Models;
+using Ordbog.Service.Models;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        ArticlesRepository _articlesRepository = new ArticlesRepository();
         public IActionResult Index()
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://service.ordbog.ru/api");
-                var responseTask = client.GetAsync("api/values");
-
-                responseTask.Wait();  
-  
-                //To store result of web api response.   
-                var result = responseTask.Result; 
-
-
-
-            }
+            SearchModel sm = new SearchModel();
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(SearchModel model)
+        {
+            var searchString = model.SearchString;
+
+            if (String.IsNullOrEmpty(model.SearchString))
+            {
+                model.SearchResult = new Article[0];
+            }
+            else
+            {
+                model.SearchResult = _articlesRepository.GetArticles().Where(p =>
+                    CultureInfo.CurrentCulture.CompareInfo.IndexOf
+                        (p.Word, searchString, CompareOptions.IgnoreCase) >= 0).ToList();
+            }
+            return View(model);
         }
 
         public IActionResult Privacy()
