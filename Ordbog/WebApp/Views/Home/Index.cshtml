@@ -1,4 +1,5 @@
-﻿@model Ordbog.App.Models.SearchModel;
+﻿@using Ordbog.Service.Models
+@model Ordbog.App.Models.SearchModel;
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,67 +8,73 @@
 }
 
 @*<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
-    <ol>
-        @foreach (var article in @Model.SearchResult)
-        {
-            <li>@article.Word [@article.Transcription]</li>
-        }
-    </ol>
-</div>*@
-
-<div class="row">
-    <div class="col-md-6">
-        <br />
-        <div id="custom-search-input">
-            <div class="btn-group" role="group" aria-label="First group">
-                <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('æ')">æ</button>
-                <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('ø')">ø</button>
-                <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('å')">å</button>
-            </div>
-            <div><br /></div>
-            <div class="input-group col-md-12">
-                @Html.TextBox("SearchString", null, new { @class = "form-control input-lg" })
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-success btn-lg margin-right">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
-            <br />
-            @if (Model != null)
+        <ol>
+            @foreach (var article in @Model.SearchResult)
             {
-                if (Model.SearchResult.Any())
+                <li>@article.Word [@article.Transcription]</li>
+            }
+        </ol>
+    </div>*@
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-6">
+            <br/>
+            <div id="custom-search-input">
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('æ')">æ</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('ø')">ø</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('å')">å</button>
+                </div>
+                <div><br/></div>
+                <div class="input-group col-md-12">
+                    @Html.TextBox("SearchString", null, new {@class = "form-control input-lg"})
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success btn-lg margin-right">
+                            <span class="glyphicon glyphicon-search">Поиск</span>
+                        </button>
+                    </span>
+                </div>
+                <br/>
+                @if (Model != null)
                 {
-                    foreach (var article in Model.SearchResult)
+                    if (Model.SearchResult.Any())
                     {
-                        <div class="card bg-light mb-3" style="max-width: 18rem;">
-                            <div class="card-header"><strong>@article.Word</strong></div>
-                            <div>@article.PartOfSpeech</div>
-                            <div class="card-body">
-                                <h5 class="card-title">[@article.Transcription]</h5>
-                                <p class="card-text"> @article.Translations.ToList()[0]</p>
-                            </div>
-                        </div>
+                        foreach (var article in Model.SearchResult)
+                        {
+            <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card-header"><strong>@article.Word</strong></div>
+                @if (article.PartOfSpeech != PartOfSpeech.Undefined)
+                {
+                    <div>@article.PartOfSpeech</div>
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title">[@article.Transcription]</h5>
+                    @*<p class="card-text"> @article.Translations.ToList()[0]</p>*@
+                </div>
+            </div>
+                        }
+                    }
+                    else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @if (string.IsNullOrEmpty(Model.SearchString))
+                            {
+                                <li class="list-group-item">Введите строку для поиска</li>
+                            }
+                            else
+                            {
+                                <li class="list-group-item">по запросу "@Model.SearchString" ничего не найдено</li>
+                            }
+                        </ul>
                     }
                 }
-                else
-                {
-                    <ul class="list-group list-group-flush">
-                        @if (string.IsNullOrEmpty(Model.SearchString))
-                        {
-                            <li class="list-group-item">Введите строку для поиска</li>
-                        }
-                        else
-                        {
-                            <li class="list-group-item">по запросу "@Model.SearchString" ничего не найдено</li>
-                        }
-                    </ul>
-                }
-            }
 
+            </div>
         </div>
     </div>
-</div>
+}

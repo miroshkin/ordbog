@@ -26,6 +26,7 @@ namespace Ordbog.Service.Models
 
     public enum PartOfSpeech
     {
+        Undefined,
         Noun,
         Pronoun,
         Adjective,
