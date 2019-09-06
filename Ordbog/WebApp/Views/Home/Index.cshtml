@@ -2,9 +2,7 @@
 @model Ordbog.App.Models.SearchModel;
 
 @{
-    ViewData["Title"] = "Home Page";
-
-
+    ViewData["Title"] = "ordbog.ru - русско-датский и датско-русский онлайн словарь - russisk-dansk og dansk-russisk online ordbog";
 }
 
 @*<div class="text-center">
@@ -24,16 +22,16 @@
         <div class="col-md-6">
             <br/>
             <div id="custom-search-input">
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('æ')">æ</button>
-                    <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('ø')">ø</button>
-                    <button type="button" class="btn btn-info btn-lg" onclick="addSymbolToSearchString('å')">å</button>
+                <div class="btn-group ml-3" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-info btn-md" onclick="addSymbolToSearchString('æ')">æ</button>
+                    <button type="button" class="btn btn-info btn-md" onclick="addSymbolToSearchString('ø')">ø</button>
+                    <button type="button" class="btn btn-info btn-md" onclick="addSymbolToSearchString('å')">å</button>
                 </div>
                 <div><br/></div>
                 <div class="input-group col-md-12">
                     @Html.TextBox("SearchString", null, new {@class = "form-control input-lg"})
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-success btn-lg margin-right">
+                        <button type="submit" class="btn btn-success btn-md margin-right ml-2">
                             <span class="glyphicon glyphicon-search">Поиск</span>
                         </button>
                     </span>
