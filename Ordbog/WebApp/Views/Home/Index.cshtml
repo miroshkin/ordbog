@@ -20,15 +20,15 @@
 {
     <div class="row">
         <div class="col-md-6">
-            <br/>
+
             <div id="custom-search-input">
-                <div class="btn-group ml-3" role="group" aria-label="First group">
+                <div class="btn-group" role="group" aria-label="First group">
                     <button type="button" class="btn btn-info btn-md" onclick="addSymbolToSearchString('æ')">æ</button>
                     <button type="button" class="btn btn-info btn-md" onclick="addSymbolToSearchString('ø')">ø</button>
                     <button type="button" class="btn btn-info btn-md" onclick="addSymbolToSearchString('å')">å</button>
                 </div>
                 <div><br/></div>
-                <div class="input-group col-md-12">
+                <div class="input-group col-md-12 pl-0 pr-0 pt-3">
                     @Html.TextBox("SearchString", null, new {@class = "form-control input-lg"})
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-success btn-md margin-right ml-2">
@@ -43,7 +43,7 @@
                     {
                         foreach (var article in Model.SearchResult)
                         {
-            <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card bg-light mb-3 ml-0">
                 <div class="card-header"><strong>@article.Word</strong></div>
                 @if (article.PartOfSpeech != PartOfSpeech.Undefined)
                 {
