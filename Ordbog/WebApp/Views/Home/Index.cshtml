@@ -44,15 +44,27 @@
                         foreach (var article in Model.SearchResult)
                         {
             <div class="card bg-light mb-3 ml-0">
-                <div class="card-header"><strong>@article.Word</strong></div>
+                <div class="card-header"><strong>@article.Word</strong>  [@article.Transcription]</div>
                 @if (article.PartOfSpeech != PartOfSpeech.Undefined)
                 {
                     <div>@article.PartOfSpeech</div>
                 }
 
                 <div class="card-body">
-                    <h5 class="card-title">[@article.Transcription]</h5>
-                    @*<p class="card-text"> @article.Translations.ToList()[0]</p>*@
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        
+                        @if (article.Translations.Count > 0)
+                        {
+                            <ol>
+                                @foreach (var t in article.Translations.ToList())
+                                {
+                                    <li>@t.Text</li>
+                                }
+                            </ol>
+                        }
+                    </p>
+                    
                 </div>
             </div>
                         }

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Content Update="web.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
