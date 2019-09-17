@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,9 @@ namespace Ordbog.Service.Controllers
                 return BadRequest(ModelState);
             }
 
-            var articles = _context.Articles.Where(a => a.Word.StartsWith(word)).ToList();
+            var articles = _context.Articles.Where(p =>
+                CultureInfo.CurrentCulture.CompareInfo.IndexOf
+                    (p.Word, word, CompareOptions.IgnoreCase) >= 0).ToList();
             
             foreach (var article in articles)
             {

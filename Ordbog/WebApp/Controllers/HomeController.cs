@@ -34,9 +34,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                model.SearchResult = _articlesRepository.GetArticles().Where(p =>
-                    CultureInfo.CurrentCulture.CompareInfo.IndexOf
-                        (p.Word, searchString, CompareOptions.IgnoreCase) >= 0).ToList();
+                model.SearchResult = _articlesRepository.GetArticles(model.SearchString).ToList();
             }
             return View(model);
         }

@@ -40,6 +40,33 @@ namespace Ordbog.App.Data
             }
             
             return _list.OrderBy(x => x.Word).ToList();
+
+
+        }
+
+        public List<Article> GetArticles(string word)
+        {
+            dynamic result;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://service.ordbog.ru/api");
+                var responseTask = client.GetAsync($"api/articles/{word}");
+
+                responseTask.Wait();  
+  
+                //To store result of web api response.   
+                result = responseTask.Result;
+                result.EnsureSuccessStatusCode();
+                string responseBody = result.Content.ReadAsStringAsync().Result;
+
+                
+                SearchModel sm = new SearchModel();
+                _list = JsonConvert.DeserializeObject<List<Article>>(responseBody);
+            }
+            
+            return _list.OrderBy(x => x.Word).ToList();
+
+
         }
     }
 }
