@@ -37,20 +37,20 @@ namespace Ordbog.Service.Controllers
                 return BadRequest(ModelState);
             }
 
-            var articles = _context.Articles.Where(m => m.Word.Contains(word)).ToList();
+            var articles = _context.Articles.Where(a => a.Word.StartsWith(word)).ToList();
+            
+            foreach (var article in articles)
+            {
+                article.Translations = _context.Translations.Where(t => t.ArticleId == article.ArticleId).ToList();
+            }
+
 
             if (articles.Count == 0)
             {
                 return NotFound();
             }
             
-            if (articles.Count == 1)
-            {
-                articles[0].Translations = _context.Translations.Where(t => t.ArticleId == articles[0].ArticleId).ToList();
-            }
-
             return Ok(articles);
-
         }
 
         // POST api/articles
