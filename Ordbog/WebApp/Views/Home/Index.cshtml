@@ -44,7 +44,16 @@
                         foreach (var article in Model.SearchResult)
                         {
             <div class="card bg-light mb-3 ml-0">
-                <div class="card-header"><strong>@article.Word</strong>  [@article.Transcription]</div>
+                <div class="card-header"><strong>@article.Word</strong>  
+                
+                    @if (!String.IsNullOrEmpty(@article.Transcription))
+                    {
+                        <strong>[@article.Transcription]</strong>
+                    }
+
+                </div>
+                
+
                 @if (article.PartOfSpeech != PartOfSpeech.Undefined)
                 {
                     <div>@article.PartOfSpeech</div>
