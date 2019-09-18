@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -55,7 +56,14 @@ namespace Ordbog.App.Data
                 responseTask.Wait();  
   
                 //To store result of web api response.   
+                
                 result = responseTask.Result;
+
+                if (responseTask.Result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return new List<Article>();
+                }
+
                 result.EnsureSuccessStatusCode();
                 string responseBody = result.Content.ReadAsStringAsync().Result;
 
