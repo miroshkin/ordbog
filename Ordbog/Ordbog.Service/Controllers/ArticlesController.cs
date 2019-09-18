@@ -23,6 +23,7 @@ namespace Ordbog.Service.Controllers
         }
 
         // GET api/articles
+        [ApiVersion("1.0")]
         [HttpGet]
         public ActionResult<IEnumerable<Article>> Get()
         {
@@ -30,6 +31,7 @@ namespace Ordbog.Service.Controllers
         }
 
         // GET api/articles/{searchKey}
+        [ApiVersion("1.0")]
         [HttpGet("{word}")]
         public async Task <ActionResult<Article>> Get(string word)
         {
@@ -57,18 +59,21 @@ namespace Ordbog.Service.Controllers
         }
 
         // POST api/articles
+        [ApiVersion("1.0")]
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
         // PUT api/articles/5
+        [ApiVersion("1.0")]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/articles/5
+        [ApiVersion("1.0")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
