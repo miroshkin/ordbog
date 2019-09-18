@@ -41,8 +41,7 @@ namespace Ordbog.Service.Controllers
             }
 
             var articles = _context.Articles.Where(p =>
-                CultureInfo.CurrentCulture.CompareInfo.IndexOf
-                    (p.Word, word, CompareOptions.IgnoreCase) >= 0).ToList();
+                CultureInfo.CurrentCulture.CompareInfo.IndexOf(p.Word, word, CompareOptions.IgnoreCase) >= 0 && p.Word.StartsWith(word)).ToList();
             
             foreach (var article in articles)
             {
