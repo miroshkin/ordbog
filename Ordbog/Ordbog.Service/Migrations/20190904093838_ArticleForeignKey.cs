@@ -6,24 +6,24 @@ namespace Ordbog.Service.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Translations_Articles_ArticleId",
-                table: "Translations");
+            //migrationBuilder.DropForeignKey(
+            //    name: "FK_Translations_Articles_ArticleId",
+            //    table: "Translations");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "ArticleId",
-                table: "Translations",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldNullable: true);
+            //migrationBuilder.AlterColumn<int>(
+            //    name: "ArticleId",
+            //    table: "Translations",
+            //    nullable: false,
+            //    oldClrType: typeof(int),
+            //    oldNullable: true);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Translations_Articles_ArticleId",
-                table: "Translations",
-                column: "ArticleId",
-                principalTable: "Articles",
-                principalColumn: "ArticleId",
-                onDelete: ReferentialAction.Cascade);
+            //migrationBuilder.AddForeignKey(
+            //    name: "FK_Translations_Articles_ArticleId",
+            //    table: "Translations",
+            //    column: "ArticleId",
+            //    principalTable: "Articles",
+            //    principalColumn: "ArticleId",
+            //    onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

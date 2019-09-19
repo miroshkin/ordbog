@@ -15,5 +15,6 @@ namespace Ordbog.Service.Data
 
         public DbSet<Ordbog.Service.Models.Article> Articles { get; set; }
         public DbSet<Ordbog.Service.Models.Translation> Translations { get; set; }
+        public DbSet<Ordbog.Service.Models.ArticleSearchLog> ArticlesLog { get; set; }
     }
 }

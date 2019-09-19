@@ -35,10 +35,13 @@ namespace Ordbog.Service.Controllers
         [HttpGet("{word}")]
         public async Task <ActionResult<Article>> Get(string word)
         {
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+
 
             var articles = _context.Articles.Where(p =>
                 CultureInfo.CurrentCulture.CompareInfo.IndexOf(p.Word, word, CompareOptions.IgnoreCase) >= 0 && p.Word.StartsWith(word)).ToList();
@@ -51,10 +54,26 @@ namespace Ordbog.Service.Controllers
 
             if (articles.Count == 0)
             {
+                LogSearchWord(word);
                 return NotFound();
             }
-            
+
             return Ok(articles);
+        }
+
+        private void LogSearchWord(string word)
+        {
+            var searchedWord = _context.ArticlesLog.Where(al => al.Word == word).FirstOrDefaultAsync().Result;
+            if (searchedWord == null)
+            {
+                _context.ArticlesLog.Add(new ArticleSearchLog() {Word = word, Frequency = 1});
+            }
+            else
+            {
+                searchedWord.Frequency += 1;
+            }
+
+            _context.SaveChanges();
         }
 
         // POST api/articles
