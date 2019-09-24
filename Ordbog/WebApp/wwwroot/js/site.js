@@ -3,6 +3,11 @@
 
 // Write your JavaScript code.
 function addSymbolToSearchString(symbol) {
-    $('#SearchString').val($('#SearchString').val() + symbol);
+
+    var cursorPos = $('#SearchString').prop('selectionStart');
+    var v = $('#SearchString').val();
+    var textBefore = v.substring(0, cursorPos);
+    var textAfter = v.substring(cursorPos, v.length);
+    $('#SearchString').val(textBefore + symbol + textAfter);
     $('#SearchString').focus();
 }
