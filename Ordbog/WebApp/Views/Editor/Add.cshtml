@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Ordbog.Service.Models
+@inject IViewLocalizer Localizer
+@model Ordbog.App.Models.EditorModel;
+
+@{
+    ViewData["Title"] = "ordbog.ru - русско-датский и датско-русский онлайн словарь - russisk-dansk og dansk-russisk online ordbog";
+}
+
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-6">
+
+            <div id="custom-search-input">
+                
+                <div class="input-group col-md-12 pl-0 pr-0 pt-3">
+                    @Html.TextBox("Word", null, new { @class = "form-control input-lg" })
+                    @Html.TextBox("Transcription", null, new { @class = "form-control input-lg" })
+                    @Html.TextBox("Translation", null, new { @class = "form-control input-lg" })
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success btn-md margin-right ml-2">
+                            <span class="glyphicon glyphicon-search">@Localizer["Add"]</span>
+                        </button>
+                    </span>
+                </div>
+                <br />
+                @if (Model != null)
+                {
+                    @*if (Model.Article != null)
+                    {
+                        foreach (var article in Model.SearchResult)
+                        {
+                            <div class="card bg-light mb-3 ml-0">
+                                <div class="card-header">
+                                    <strong>@article.Word</strong>
+
+                                    @if (!String.IsNullOrEmpty(@article.Transcription))
+                                    {
+                                        <div>[@article.Transcription]</div>
+                                    }
+
+                                </div>
+
+
+                                @if (article.PartOfSpeech != PartOfSpeech.Undefined)
+                                {
+                                    <div>@article.PartOfSpeech</div>
+                                }
+
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <p class="card-text">
+
+                                        @if (article.Translations.Count > 0)
+                                        {
+                                            <ol>
+                                                @foreach (var t in article.Translations.ToList())
+                                                {
+                                                    <li>@t.Text</li>
+                                                }
+                                            </ol>
+                                        }
+                                    </p>
+
+                                </div>
+                            </div>
+                        }*@
+                    }
+                    @*else
+                    {
+                        <ul class="list-group list-group-flush">
+                            @if (string.IsNullOrEmpty(Model.SearchString))
+                            {
+                            <li class="list-group-item">@Localizer["Type the word for search"]</li>
+                            }
+                            else
+                            {
+                        <li class="list-group-item">@Localizer["Nothing is found {0}" , @Model.SearchString]</li>
+                            }
+                        </ul>
+                    }*@
+                }
+
+            </div>
+        </div>
+    </div>
+}

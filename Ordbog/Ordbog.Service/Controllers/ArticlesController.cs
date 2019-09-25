@@ -79,22 +79,81 @@ namespace Ordbog.Service.Controllers
         // POST api/articles
         [ApiVersion("1.0")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task <IActionResult> Post([FromBody] Article article)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Add(article);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("Get", new { Word = article.Word }, article);
         }
 
         // PUT api/articles/5
         [ApiVersion("1.0")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Article article)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != article.ArticleId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(article).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArticleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         // DELETE api/articles/5
         [ApiVersion("1.0")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var article = await _context.Articles.SingleOrDefaultAsync(m => m.ArticleId == id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            _context.Articles.Remove(article);
+            await _context.SaveChangesAsync();
+
+            return Ok(article);
+        }
+
+
+        private bool ArticleExists(int id)
+        {
+            return _context.Articles.Any(e => e.ArticleId == id);
         }
     }
 }
